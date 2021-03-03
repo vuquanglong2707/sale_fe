@@ -37,9 +37,9 @@ class FormAddOrderDetail extends Component {
                 modifiedDate: "2021-02-02T09:42:00.000+0000",
                 customer_id: data.customer_id,
                 quantity: data.dtoOrderDetails[0].quantity,
-                weight: data.dtoOrderDetails[0].weight,
+                variation: data.dtoOrderDetails[0].variation,
                 productId: data.dtoOrderDetails[0].productId,
-                productTitle: data.dtoOrderDetails[0].productTitle
+                property: data.dtoOrderDetails[0].property
                
             })
         }
@@ -62,12 +62,13 @@ class FormAddOrderDetail extends Component {
             createdDate: "2021-02-02T09:41:53.000+0000",
             modified_by: value.modified_by,
             modifiedDate: "2021-02-02T09:42:00.000+0000",
-            customer_id: value.customer_id,
+            customer_name:value.customer_name,
+            customer_phone:value.customer_phone,
             dtoOrderDetails: [{
                 quantity: value.quantity,
-                weight: value.weight,
                 productId: value.productId,
-                productTitle: value.productTitle
+                variation:"Size",
+                property:"22"
             }],
         }
 
@@ -241,8 +242,17 @@ class FormAddOrderDetail extends Component {
                             </Col>
                             <Col span={6}>
                                 <Form.Item
-                                    name="customer_id"
-                                    label="Mã khách hàng"
+                                    name="customer_name"
+                                    label="Tên khách hàng"
+                                    rules={[{ required: true, message: 'Please enter Mã khách hàng ' }]}
+                                >
+                                    <Input style={{ borderRadius: "5px" }} placeholder="Please enter Mã khách hàng" />
+                                </Form.Item>
+                            </Col>
+                            <Col span={6}>
+                                <Form.Item
+                                    name="customer_phone"
+                                    label="Số điện thoại khách hàng"
                                     rules={[{ required: true, message: 'Please enter Mã khách hàng ' }]}
                                 >
                                     <Input style={{ borderRadius: "5px" }} placeholder="Please enter Mã khách hàng" />
@@ -272,9 +282,9 @@ class FormAddOrderDetail extends Component {
                             </Col>
                             <Col span={6}>
                                 <Form.Item
-                                    name="weight"
-                                    label="cân nặng"
-                                    rules={[{ required: true, message: 'Please enter cân nặng ' }]}
+                                    name="variation"
+                                    label="Tên biến thể"
+                                    rules={[{ required: true, message: 'Please enter Biến thể ' }]}
                                 >
                                     <Input style={{ borderRadius: "5px" }} placeholder="Please enter totalPrice" />
                                 </Form.Item>
@@ -290,11 +300,11 @@ class FormAddOrderDetail extends Component {
                             </Col>
                             <Col span={6}>
                                 <Form.Item
-                                    name="productTitle"
-                                    label="Tên sản phẩm"
-                                    rules={[{ required: true, message: 'Please enter productTitle ' }]}
+                                    name="property"
+                                    label="Tên thuộc tính"
+                                    rules={[{ required: true, message: 'Please enter thuộc tính ' }]}
                                 >
-                                    <Input style={{ borderRadius: "5px" }} placeholder="Please enter productTitle" />
+                                    <Input style={{ borderRadius: "5px" }} placeholder="Please enter thuộc tính" />
                                 </Form.Item>
                             </Col>
                         </Row>

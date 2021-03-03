@@ -71,7 +71,7 @@ class Login extends React.Component {
           <Col span={10} style={{ marginTop: '100px'}}>
             <Image
               style={{ 
-                width: 630,
+                width: 580,
                 height: 335
               }}
               preview={false}
