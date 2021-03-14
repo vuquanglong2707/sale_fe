@@ -4,9 +4,9 @@ import WithLoading from '../../../hoc/loading';
 import ToJS from '../../../hoc/toJS';
 import PropTypes from 'prop-types';
 import { DeleteOutlined, EditOutlined,EyeOutlined } from '@ant-design/icons';
-function refreshPage(){ 
-    window.location.reload(); 
-}
+// function refreshPage(){ 
+//     window.location.reload(); 
+// }
 const columns = (onChangeStatus, onDelete, onEdit) => [
   {
     title: 'ID',

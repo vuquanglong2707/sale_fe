@@ -107,14 +107,14 @@ export const deleteProduct = (params, meta) => async (dispatch) => {
     const { response, error } = await callApi({ ...api, params });
     if(!error && response.status === 200 && response.data.success === true) {
         dispatch({
-            type: Types.DELETE_USERSYSTEM_SUCCESS
+            type: Types.DELETE_PRODUCT_SUCCESS
         })
         if (meta && meta.onSuccess) {
             meta.onSuccess()
         }
     }
     else {
-        dispatch({ type: Types.DELETE_USERSYSTEM_FAILURE })
+        dispatch({ type: Types.DELETE_PRODUCT_FAILURE })
         if (meta && meta.onError) {
             meta.onError(error)
         }

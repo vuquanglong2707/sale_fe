@@ -38,9 +38,9 @@ const columns = (onChangeStatus, onDelete, onEdit) => [
     ),
   },
   {
-    title: 'Tiền đã trả',
-    dataIndex: 'cash_money',
-    key: 'cash_money',
+    title: 'Tổng tiền',
+    dataIndex: 'total_money',
+    key: 'total_money',
     width:120,
     ellipsis: true,
     render: (value) => (
@@ -58,9 +58,9 @@ const columns = (onChangeStatus, onDelete, onEdit) => [
     ),
   },
   {
-    title: 'Người xác nhận',
-    dataIndex: 'modified_by',
-    key: 'modified_by',
+    title: 'Người mua',
+    dataIndex: 'customer_name',
+    key: 'customer_name',
     width:120,
     ellipsis: true,
     render: (value) => (
@@ -68,9 +68,9 @@ const columns = (onChangeStatus, onDelete, onEdit) => [
     ),
   },
   {
-    title: 'Người tạo',
-    dataIndex: 'createdBy',
-    key: 'createdBy',
+    title: 'Số điện thoại',
+    dataIndex: 'customer_phone',
+    key: 'customer_phone',
     width:120,
     ellipsis: true,
     render: (value) => (

@@ -1,19 +1,26 @@
 import {
     Col, Form,
     Input,
-    Modal, notification, Row, Switch,Select,Upload,Button , message,uploadButton,Tag
+    Modal, notification, Row, Switch,Select,Upload,Button , message,uploadButton,Tag,Menu,Dropdown
 } from 'antd';
+import axios from 'axios';
+
 import { TweenOneGroup } from 'rc-tween-one';
 import React, { Component } from 'react';
 import { UploadOutlined ,PlusOutlined } from '@ant-design/icons';
+
 import { HEADERS } from '../../../constants/api'; 
 import { API_URL } from '../../../utils/Config';
 import select from '../../..//utils/select';
 import { connect } from 'react-redux';
 import { beforeUpload } from '../../../constants/ConvertImage';
-import { inSertProduct,updateProduct } from '../redux/action';
+import { inSertProduct,updateProduct,getAll } from '../redux/action';
 const { Option } = Select;
 const { TextArea } = Input;
+function handleChange(value) {
+    console.log(`selected ${value}`);
+  }
+
 class FormAddProduct extends Component {
 
     formRef = React.createRef();
@@ -25,26 +32,21 @@ class FormAddProduct extends Component {
             tags: [],
             inputVisible: false,
             inputValue: '',
+            persons: [],
+            productId: "",
         }
 
     }
-    // componentWillReceiveProps(nextStates) {
-    //     if (nextStates && nextStates.dataEdit) {
-    //         if (this.props.type === "update" && this.props.dataEdit !== null) {
-    //         const data = nextStates.dataEdit;
-    //         // const { image } = this.state;
-    //         this.setState({
-    //             tags:data.dtoVariationList[0].properties
- 
-    //         });
-    //     }
-    //     }
-    // }
+    
+
     componentDidUpdate() {
 
         if (this.props.type === "update" && this.props.dataEdit !== null) {
             const data = this.props.dataEdit;
-
+            // this.setState({
+            //     productId: data.id,
+            //     fileList: data.images,
+            //   });
             this.formRef.current.setFieldsValue({
                 name: data.name,
                 sku: data.sku,
@@ -68,31 +70,8 @@ class FormAddProduct extends Component {
                 crb:data.dtoVariationList[0].properties,
             })
         }
-        
-        
-        // else {
-        //     this.formRef.current.resetFields();
-        // }
     }
-    // handleChangeImage = async (image) => {
-    //     const { status } = image.file;
-    //     // if (status === "done") {
-    //     //     // const newData = [...this.state.productVariantion];
-    //     //     // const index = newData.findIndex(item => record.id === item.id);
-    //     //     const item = {
-    //     //         // ...record,
-    //     //         image: image.file.response.data[0]
-    //     //     };
-    //     //     newData.splice(index, 1, {
-    //     //         ...item,
-    //     //     });
-    //     //     await this.setState({ productVariantion: newData })
-    //     // }
-    //     // else if (status === 'error') {
-    //     //     message.error(`${image.file.name} cập nhật ảnh thất bại.`);
-    //     // }
-        
-    // }
+
     handleChange = info => {
         let fileList = [...info.fileList];
         let urlList = [];
@@ -114,7 +93,7 @@ class FormAddProduct extends Component {
     };
 
     handleOk = (value) => {
-        const { fileList, checked,tags } = this.state;
+        const { fileList,tags } = this.state;
         const payload = {
             name: value.name,
             sku: value.sku,
@@ -139,7 +118,7 @@ class FormAddProduct extends Component {
                 {
                     title:value.title,
                     active:value.active,
-                    createBy:value.crb,
+                    createBy:"quang long",
                     properties:tags.length > 0 ? tags : []
                 }
             ]
@@ -147,6 +126,7 @@ class FormAddProduct extends Component {
         if(this.props.type==="update"){
             this.props.updateProduct({ ...payload, id: this.props.dataEdit.id }, {
                 onSuccess: () => {
+                    // fileList=[];
                     notification.open({ message: `Đã cập nhật thành công tài khoản #${this.props.dataEdit.name} ` });
                     this.handleCancel();
                 },
@@ -170,11 +150,7 @@ class FormAddProduct extends Component {
     handleCancel = () => {
         this.props.onClose();
     };
-    // state = {
-    //     tags: ['Tag 1', 'Tag 2', 'Tag 3'],
-    //     inputVisible: false,
-    //     inputValue: '',
-    //   };
+
     
       handleClose = removedTag => {
         const tags = this.state.tags.filter(tag => tag !== removedTag);
@@ -226,12 +202,29 @@ class FormAddProduct extends Component {
           </span>
         );
       };
-    
+        componentDidMount() {
+        axios({
+            method: 'get',
+            url: `${API_URL}/api/catogories/getAll`,
+            headers: HEADERS.JWT_HEADER(),
+            responseType: 'json'
+          })
+            .then(res => {
+            const data_export = res.data.data;
+            const persons=[];
+            for(let i=0;i<data_export.length;i++){
+                persons.push(data_export[i].title)
+            }
+            this.setState({ persons });
+            })
+            .catch(error => console.log(error));
+        }
     render() {
-        // const { fileList } = this.state;
-        const { fileList,tags, inputVisible, inputValue } = this.state;
-        // console.log("tags: ",this.props.dataEdit.dtoVariationList)
+        const { fileList,tags, inputVisible, inputValue,persons } = this.state;
         console.log(tags)
+        console.log(persons)
+        // for(let j=0;i=j)
+        console.log("file list: ",this.props.dataEdit.images)
         const tagChild = tags.map(this.forMap);
         return (
             <>
@@ -306,16 +299,21 @@ class FormAddProduct extends Component {
                                     label="Loại sản phẩm"
                                     rules={[{ required: true, message: 'Please enter unitsTitle ' }]}
                                 >
-                                    <Input style={{ borderRadius: "5px" }} placeholder="Please enter unitsTitle" />
+                                    <Select defaultValue="Loại sản phẩm" style={{ width: 180 }} onChange={handleChange}>
+                                         {persons.map(item => (
+                                            <Option value={item}>{item}</Option>
+                                            ))}
+                                    </Select>
                                 </Form.Item>
                             </Col>
+                      
                             <Col span={6}>
                                 <Form.Item
                                     name="createdBy"
                                     label="Người tạo"
-                                    rules={[{ required: true, message: 'Please enter Người tạo' }]}
+                                    rules={[{ required: false, message: 'Please enter unitsTitle ' }]}
                                 >
-                                    <Input style={{ borderRadius: "5px" }} placeholder="Please enter Người tạo" />
+                                    <Input style={{ borderRadius: "5px" }} placeholder="Please enter unitsTitle" />
                                 </Form.Item>
                             </Col>
 
@@ -433,10 +431,10 @@ class FormAddProduct extends Component {
                                 <Col span={6}>
                                     <Form.Item
                                         name="crb"
-                                        label="Người tạo"
-                                        rules={[{ required: true, message: 'Please enter người tạo ' }]}
+                                        label="Tên biến thể"
+                                        rules={[{ required:false }]}
                                     >
-                                        <Input style={{ borderRadius: "5px" }} placeholder="Please enter người tạo" />
+                                        <Input style={{ borderRadius: "5px" }}  disabled/>
                                     </Form.Item>
                                 </Col>
                                 <Col  span={6}>
@@ -494,6 +492,7 @@ class FormAddProduct extends Component {
 }
 const mapStateToProps = (state) => {
     return {
+        // catogory:select(state, 'productReducer', 'items'),
         product: select(state, 'productReducer', 'items'),
         isFetching: select(state, 'productReducer', 'isFetching'),
         meta: select(state, 'productReducer', 'meta'),
@@ -503,7 +502,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-
+        // getAll: (filterOptions) => {
+        //     dispatch(getAll(filterOptions));
+        //   },
         inSertProduct: (user, meta) => {
             dispatch(inSertProduct(user, meta));
         },

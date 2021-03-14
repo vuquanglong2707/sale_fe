@@ -48,76 +48,9 @@ class FormDetail extends Component {
                 isActive: data.isActive,
             })
         }
-        // else {
-        //     this.formRef.current.resetFields();
-        // }
+ 
     }
 
-    // handleChange = info => {
-    //     let fileList = [...info.fileList];
-    //     let urlList = [];
-    //     const { status } = info.file;
-    //     if (status === 'done') {
-    //         fileList.map(file => {
-    //             if (file.response) {
-    //                 file.url = file.response.data[0];
-    //                 urlList.push(file.url);
-    //             }
-    //             return file;
-    //         });
-    //         this.setState({ fileList : urlList});
-    //         message.success(` tải ảnh lên thành công .`);
-    //     } else if (status === 'error') {
-    //         message.error(` cập nhật ảnh thất bại.`);
-    //     }
-       
-    // };
-
-    // handleOk = (value) => {
-    //     const { fileList, checked } = this.state;
-    //     const payload = {
-    //         name: value.name,
-    //         sku: value.sku,
-    //         createdBy: value.createdBy,
-    //         createdDate: '',
-    //         modifiedBy: value.createdBy,
-    //         modifiedDate: '',
-    //         barCode: value.barCode,
-    //         qrCode: value.qrCode,
-    //         content: value.content,
-    //         price: value.price,
-    //         salePrice: value.salePrice,
-    //         descs: value.descs,
-    //         quantitySold: value.quantitySold,
-    //         quantityCurrent: value.quantityCurrent,
-    //         unitsTitle: value.unitsTitle,
-    //         images: fileList.length > 0 ? fileList : [],
-    //         productCategoriesName:value.productCategoriesName,
-    //         active: value.active ? value.active : false,
-    //         isActive: value.isActive ? value.isActive : false,
-    //     }
-    //     if(this.props.type==="update"){
-    //         this.props.updateProduct({ ...payload, id: this.props.dataEdit.id }, {
-    //             onSuccess: () => {
-    //                 notification.open({ message: `Đã cập nhật thành công tài khoản #${this.props.dataEdit.name} ` });
-    //                 this.handleCancel();
-    //             },
-    //             onError: error => notification.error({ message: `${error} - Cập nhật thất bại tài khoản #${this.props.dataEdit.name}  ` }),
-    //         })
-    //     }
-    //     else{
-    //         this.props.inSertProduct(payload,
-    //             {
-    //                 onSuccess: () => {
-    //                     notification.open({ message: 'Thêm thành công' });
-    //                     this.handleCancel();
-    //                 },
-    //                 onError: error => notification.error({ message: `${error} - Thêm thất bại` }),
-    //         })
-    //     }
-        
-    //     this.formRef.current.resetFields();
-    // };
 
     handleCancel = () => {
         this.props.onClose();

@@ -21,7 +21,6 @@ const productReducer = (state = productState, action) => {
         case Types.UPDATE_PRODUCT_LOADING:
         case Types.GET_CATOGORIES_LOADING:    
         case Types.GET_PRODUCT_OF_SHOP_LOADING:
-        // case Types.DELETE_USERSYSTEM:
             return state.set('isFetching', true)
         case Types.GET_CATOGORIES_SUCCESS:
         case Types.GET_PRODUCT_OF_SHOP_SUCCESS:
@@ -36,7 +35,6 @@ const productReducer = (state = productState, action) => {
                 isFetching: false,
                 didInvalidate: false,
             }) 
-        case Types.DELETE_PRODUCT_SUCCESS:
         case Types.UPDATE_PRODUCT_SUCCESS:
             const items = state.get('items')
             const { id, active } = action.payload
@@ -48,19 +46,15 @@ const productReducer = (state = productState, action) => {
                 didInvalidate: false,
             })
         
-        case Types.DELETE_PRODUCT_FAILURE:
+        case Types.DELETE_PRODUCT_SUCCESS:
         case Types.UPDATE_PRODUCT_FAILURE:    
         case Types.GET_CATOGORIES_FAILURE:
+        case Types.DELETE_PRODUCT_FAILURE:
         case Types.GET_PRODUCT_OF_SHOP_FAILURE:
             return state.merge({
                 isFetching: false,
                 didInvalidate: true,
             })
-        // case Types.ADD_SERVICESHOP_SUCCESS:
-        //     return state.merge({
-        //         isFetching: false,
-        //         didInvalidate: false,
-        //     })
       default:
           return state
     }
